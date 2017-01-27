@@ -21,6 +21,39 @@ class PostsController < ApplicationController
   end
 
 
+  def show
+  end
+
+
+  def edit
+    @group = Group.find(params[:group_id])
+    @post = Post.find(params[:id])
+
+  end
+
+
+  def update
+    @group = Group.find(params[:group_id])
+    @post = Post.find(params[:id])
+    if @post.update(post_params)
+      redirect_to account_posts_path, notice: '文章编辑成功'
+    else
+      render :edit
+    end
+  end
+
+
+  def destroy
+    @group = Group.find(params[:group_id])
+    @post = Post.find(params[:id])
+
+    @post.destroy
+        flash[:alert] = "Post deleted 你成功完成了删除功能"
+        redirect_to account_posts_path
+  end
+  # destroy function test is ok! But I consider there're some bugs in it!
+
+  
   private
 
   def post_params
